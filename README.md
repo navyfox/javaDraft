@@ -29,17 +29,19 @@
     import java.util.Scanner;
     import java.io.*;
     public class Main {
-
+    
     public static void main(String[] args) throws Exception {
 
-        Integer number = getRowFromFile("/Users/rim/project/first2017/src/input.txt");
+        File inputFile = new File("input.txt");
+        File outputFile = new File("output.txt");
+        Integer number = getRowFromFile(inputFile.getAbsolutePath());
         System.out.println(number);
 
 
         int n = number;
         int sizeArray = n - 16;
         int[] numbers = new int[sizeArray];
-        Writer wr = new FileWriter ("/Users/rim/project/first2017/src/output.txt");
+        Writer wr = new FileWriter (outputFile.getAbsolutePath());
 
         for (int i = 0; i < sizeArray;){
             for (int m = 16; m < n; m++) {
