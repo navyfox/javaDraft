@@ -126,3 +126,83 @@
 
 
      }
+     
+     
+     
+ ## Three
+     import java.io.*;
+     import java.util.ArrayList;
+     import java.util.Scanner;
+     import java.util.HashSet;
+     public class Main {
+
+     public static void main(String[] args) throws Exception {
+
+        File inputFile = new File("input.txt");
+        File outputFile = new File("output.txt");
+
+        int[][] array = getArrayFromFile(inputFile.getAbsolutePath());
+        ArrayList<HashSet<Integer>> arrayList = new ArrayList<>();
+
+        for (int[] element: array) {
+            HashSet<Integer> myHashSet = new HashSet<>();
+            for (int i: element) {
+                myHashSet.add(i);
+            }
+            arrayList.add(myHashSet);
+        }
+
+        ArrayList<Integer> differentLineNumbers = new ArrayList<>();
+
+        for (int i = 0; i < arrayList.size(); i++) {
+
+            boolean seachFlag = false;
+
+            for (int element: differentLineNumbers) {
+                HashSet<Integer> myHashSetOne = arrayList.get(i);
+                HashSet<Integer> myHashSetTwo = arrayList.get(element);
+
+                if (myHashSetOne.equals(myHashSetTwo)) {
+                    seachFlag = true;
+                }
+            }
+
+            if (!seachFlag) {
+                differentLineNumbers.add(i);
+            }
+
+        }
+
+        Writer wr = new FileWriter (outputFile.getAbsolutePath());
+
+        for (int index: differentLineNumbers){
+            for (int element: array[index]) {
+                wr.write(element);
+                System.out.println(element);
+            }
+            wr.write("\n");
+        }
+        wr.close();
+
+     }
+
+     private static int[][] getArrayFromFile(String fileName) throws FileNotFoundException {
+        Scanner scanner = new Scanner(new File(fileName));
+
+        int n = scanner.nextInt();
+        int m = scanner.nextInt();
+
+        int[][] array = new int[n][m];
+
+        for(int j = 0; j < n; j++) {
+            for(int i = 0; i < m; i++) {
+                array[j][i] = scanner.nextInt();
+            }
+        }
+
+        scanner.close();
+        return array;
+     }
+
+     }
+          
