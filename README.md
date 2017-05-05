@@ -67,3 +67,62 @@
 
     }
    
+ ## Two
+     import java.io.*;
+     import java.util.ArrayList;
+     import java.util.List;
+     import java.util.Scanner;
+     public class Main {
+
+     public static void main(String[] args) throws Exception {
+
+        File inputFile = new File("input.txt");
+        File outputFile = new File("output.txt");
+
+        Scanner scanner = new Scanner(inputFile.getAbsoluteFile());
+        String textOne = scanner.nextLine();
+        String textTwo = scanner.nextLine();
+        scanner.close();
+
+        String[] wordsArrayOne = textOne.split("\\s+");
+        String[] wordsArrayTwo = textTwo.split("\\s+");
+
+        String[] wordsArrayEqualElements = getStringEqualElements(wordsArrayOne, wordsArrayTwo);
+
+        if (wordsArrayEqualElements.length == 0) {
+            System.out.println("отсутствует");
+        } if (wordsArrayEqualElements.length == 1) {
+            System.out.println(wordsArrayEqualElements[0]);
+        }
+
+        int maxLengthString = 0;
+        String stringMaxLength = "";
+
+        for (String element: wordsArrayEqualElements){
+            if (element.length() > maxLengthString) {
+                maxLengthString = element.length();
+                stringMaxLength = element;
+            }
+        }
+
+        Writer wr = new FileWriter (outputFile.getAbsolutePath());
+        wr.write(stringMaxLength);
+        wr.close();
+        System.out.println(stringMaxLength);
+
+     }
+
+     private static String[] getStringEqualElements(String[] arrayOne, String[] arrayTwo) {
+        List<String> equalsArray = new ArrayList<>();
+        for (String elementOne: arrayOne) {
+            for (String elementTwo: arrayTwo) {
+                if (elementOne.equals(elementTwo)) {
+                    equalsArray.add(elementOne);
+                }
+            }
+        }
+        return equalsArray.toArray(new String[equalsArray.size()]);
+     }
+
+
+     }
