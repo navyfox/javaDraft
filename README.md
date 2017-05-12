@@ -46,60 +46,56 @@
     }
    
  ## Two
-     import java.io.*;
-     import java.util.ArrayList;
-     import java.util.List;
+     /**
+     * IntelliJ IDEA 2017.1.1
+     * Build #IC-171.4073.35, built on April 7, 2017
+     * JRE: 1.8.0_112-release-736-b16 x86_64
+     * JVM: OpenJDK 64-Bit Server VM by JetBrains s.r.o
+     * JDK: 1.8.0_121
+     * Created by rim on 07.05.17.
+     */
+     import java.io.File;
+     import java.io.FileWriter;
+     import java.io.IOException;
+     import java.io.Writer;
      import java.util.Scanner;
+
      public class Main {
+     private static final String ESCAPE_SPACES_REGEX = "\\s+";
+     private static final String EMPTY_RESULT = "отсутствует";
+     private static final String INPUT_FILE_NAME = "input.txt";
+     private static final String OUTPUT_FILE_NAME = "output.txt";
 
-     public static void main(String[] args) throws Exception {
+     public static void main(String[] args) throws IOException {
 
-        File inputFile = new File("input.txt");
-        File outputFile = new File("output.txt");
+        Scanner scanner = new Scanner(new File(INPUT_FILE_NAME));
 
-        Scanner scanner = new Scanner(inputFile.getAbsoluteFile());
-        String textOne = scanner.nextLine();
-        String textTwo = scanner.nextLine();
+        String[] wordsArrayOne = scanner.nextLine().split(ESCAPE_SPACES_REGEX);
+        String[] wordsArrayTwo = scanner.nextLine().split(ESCAPE_SPACES_REGEX);
+
         scanner.close();
 
-        String[] wordsArrayOne = textOne.split("\\s+");
-        String[] wordsArrayTwo = textTwo.split("\\s+");
+        String longestMatch = getStringEqualElements(wordsArrayOne, wordsArrayTwo);
 
-        String[] wordsArrayEqualElements = getStringEqualElements(wordsArrayOne, wordsArrayTwo);
-
-        if (wordsArrayEqualElements.length == 0) {
-            System.out.println("отсутствует");
-        } if (wordsArrayEqualElements.length == 1) {
-            System.out.println(wordsArrayEqualElements[0]);
+        if (longestMatch == null) {
+            longestMatch = EMPTY_RESULT;
         }
 
-        int maxLengthString = 0;
-        String stringMaxLength = "";
-
-        for (String element: wordsArrayEqualElements){
-            if (element.length() > maxLengthString) {
-                maxLengthString = element.length();
-                stringMaxLength = element;
-            }
-        }
-
-        Writer wr = new FileWriter (outputFile.getAbsolutePath());
-        wr.write(stringMaxLength);
-        wr.close();
-        System.out.println(stringMaxLength);
-
+        Writer outputFile = new FileWriter (OUTPUT_FILE_NAME);
+        outputFile.write(longestMatch);
+        outputFile.close();
      }
 
-     private static String[] getStringEqualElements(String[] arrayOne, String[] arrayTwo) {
-        List<String> equalsArray = new ArrayList<>();
+     private static String getStringEqualElements(final String[] arrayOne, final String[] arrayTwo) {
+        String tempResult = null;
         for (String elementOne: arrayOne) {
             for (String elementTwo: arrayTwo) {
-                if (elementOne.equals(elementTwo)) {
-                    equalsArray.add(elementOne);
+                if (elementOne.equals(elementTwo) && (tempResult == null || elementOne.length() > tempResult.length())) {
+                    tempResult = elementOne;
                 }
             }
         }
-        return equalsArray.toArray(new String[equalsArray.size()]);
+        return tempResult;
      }
 
 
