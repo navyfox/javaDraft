@@ -1,68 +1,46 @@
 # javaDraft
-
-## First
-    public class Main {
-
-    public static void main(String[] args) throws Exception {
-        int n = 32;
-        int sizeArray = n - 16;
-    //        List<Integer> numbers = new ArrayList<>();
-        int[] numbers = new int[sizeArray];
-
-        for (int i = 0; i < sizeArray;){
-            for (int m = 16; m < n; m++) {
-    //                numbers.add(m);
-                numbers[i] = m;
-                String convert = Integer.toHexString(numbers[i]);
-                System.out.println(convert);
-                i++;
-            }
-        }
-
-
-    }
-
-    }
    
 ## First
 
+    /**
+    * IntelliJ IDEA 2017.1.1
+    * Build #IC-171.4073.35, built on April 7, 2017
+    * JRE: 1.8.0_112-release-736-b16 x86_64
+    * JVM: OpenJDK 64-Bit Server VM by JetBrains s.r.o
+    * JDK: 1.8.0_121
+    * Created by rim on 07.05.17.
+    */
+
+    import java.io.File;
+    import java.io.FileNotFoundException;
+    import java.io.FileWriter;
+    import java.io.Writer;
     import java.util.Scanner;
-    import java.io.*;
+
     public class Main {
-    
+
+    private static final int MIN = 16;
+    private static final String inputFileName = "input.txt";
+    private static final String outputFileName = "output.txt";
+
     public static void main(String[] args) throws Exception {
 
-        File inputFile = new File("input.txt");
-        File outputFile = new File("output.txt");
-        Integer number = getRowFromFile(inputFile.getAbsolutePath());
-        System.out.println(number);
+        int max = getIntFromFile(inputFileName);
 
+        Writer wr = new FileWriter (outputFileName);
 
-        int n = number;
-        int sizeArray = n - 16;
-        int[] numbers = new int[sizeArray];
-        Writer wr = new FileWriter (outputFile.getAbsolutePath());
-
-        for (int i = 0; i < sizeArray;){
-            for (int m = 16; m < n; m++) {
-                numbers[i] = m;
-                String convert = Integer.toHexString(numbers[i]);
-                wr.write(convert);
-                wr.write("\n");
-                System.out.println(convert);
-                i++;
-            }
+        for (int i = MIN; i < max; i++) {
+            wr.write(Integer.toHexString(i) + "\n");
         }
+
         wr.close();
-
-
     }
 
-    private static Integer getRowFromFile(String fileName) throws FileNotFoundException {
-        Scanner scanner = new Scanner((new File(fileName)));
-        int nums = scanner.nextInt();
+    private static Integer getIntFromFile(String fileName) throws FileNotFoundException {
+        Scanner scanner = new Scanner(new File(fileName));
+        int number = scanner.nextInt();
         scanner.close();
-        return nums;
+        return number;
     }
 
     }
