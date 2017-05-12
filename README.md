@@ -20,14 +20,14 @@
     public class Main {
 
     private static final int MIN = 16;
-    private static final String inputFileName = "input.txt";
-    private static final String outputFileName = "output.txt";
+    private static final String INPUT_FILE_NAME = "input.txt";
+    private static final String OUTPUT_FILE_NAME = "output.txt";
 
     public static void main(String[] args) throws Exception {
 
-        int max = getIntFromFile(inputFileName);
+        int max = getIntFromFile(INPUT_FILE_NAME);
 
-        Writer outputFile = new FileWriter (outputFileName);
+        Writer outputFile = new FileWriter (OUTPUT_FILE_NAME);
 
         for (int i = MIN; i < max; i++) {
             outputFile.write(Integer.toHexString(i) + "\n");
