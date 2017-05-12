@@ -27,13 +27,13 @@
 
         int max = getIntFromFile(inputFileName);
 
-        Writer wr = new FileWriter (outputFileName);
+        Writer outputFile = new FileWriter (outputFileName);
 
         for (int i = MIN; i < max; i++) {
-            wr.write(Integer.toHexString(i) + "\n");
+            outputFile.write(Integer.toHexString(i) + "\n");
         }
 
-        wr.close();
+        outputFile.close();
     }
 
     private static Integer getIntFromFile(String fileName) throws FileNotFoundException {
