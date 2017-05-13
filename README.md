@@ -104,78 +104,64 @@
      
      
  ## Three
-     import java.io.*;
-     import java.util.ArrayList;
-     import java.util.Scanner;
+     /**
+     * IntelliJ IDEA 2017.1.1
+     * Build #IC-171.4073.35, built on April 7, 2017
+     * JRE: 1.8.0_112-release-736-b16 x86_64
+     * JVM: OpenJDK 64-Bit Server VM by JetBrains s.r.o
+     * JDK: 1.8.0_121
+     * Created by rim on 07.05.17.
+     */
+     import java.io.File;
+     import java.io.FileNotFoundException;
+     import java.io.FileWriter;
+     import java.io.Writer;
+     import java.util.HashMap;
      import java.util.HashSet;
+     import java.util.Map;
+     import java.util.Scanner;
+     import java.util.Set;
+
      public class Main {
+
+     private static final String INPUT_FILE_NAME = "input.txt";
+     private static final String OUTPUT_FILE_NAME = "output.txt";
 
      public static void main(String[] args) throws Exception {
 
-        File inputFile = new File("input.txt");
-        File outputFile = new File("output.txt");
+        Map<Set<Integer>, int[]> mapDifferentString = getArrayFromFile(INPUT_FILE_NAME);
 
-        int[][] array = getArrayFromFile(inputFile.getAbsolutePath());
-        ArrayList<HashSet<Integer>> arrayList = new ArrayList<>();
+        Writer outputFile = new FileWriter(OUTPUT_FILE_NAME);
 
-        for (int[] element: array) {
-            HashSet<Integer> myHashSet = new HashSet<>();
-            for (int i: element) {
-                myHashSet.add(i);
+        for (Map.Entry<Set<Integer>, int[]> entry : mapDifferentString.entrySet()){
+            for (int element: entry.getValue()) {
+                outputFile.write(element + " ");
             }
-            arrayList.add(myHashSet);
+            outputFile.write("\n");
         }
-
-        ArrayList<Integer> differentLineNumbers = new ArrayList<>();
-
-        for (int i = 0; i < arrayList.size(); i++) {
-
-            boolean seachFlag = false;
-
-            for (int element: differentLineNumbers) {
-                HashSet<Integer> myHashSetOne = arrayList.get(i);
-                HashSet<Integer> myHashSetTwo = arrayList.get(element);
-
-                if (myHashSetOne.equals(myHashSetTwo)) {
-                    seachFlag = true;
-                }
-            }
-
-            if (!seachFlag) {
-                differentLineNumbers.add(i);
-            }
-
-        }
-
-        Writer wr = new FileWriter (outputFile.getAbsolutePath());
-
-        for (int index: differentLineNumbers){
-            for (int element: array[index]) {
-                wr.write(element);
-                System.out.println(element);
-            }
-            wr.write("\n");
-        }
-        wr.close();
+        outputFile.close();
 
      }
 
-     private static int[][] getArrayFromFile(String fileName) throws FileNotFoundException {
+     private static Map<Set<Integer>, int[]> getArrayFromFile(String fileName) throws FileNotFoundException {
         Scanner scanner = new Scanner(new File(fileName));
 
         int n = scanner.nextInt();
         int m = scanner.nextInt();
 
-        int[][] array = new int[n][m];
+        Map<Set<Integer>, int[]> map = new HashMap<>();
 
-        for(int j = 0; j < n; j++) {
-            for(int i = 0; i < m; i++) {
-                array[j][i] = scanner.nextInt();
+        for(int i = 0; i < n; i++) {
+            Set<Integer> set = new HashSet<>();
+            int[] array = new int[m];
+            for(int j = 0; j < m; j++) {
+                array[j] = scanner.nextInt();
+                set.add(array[j]);
             }
+            map.putIfAbsent(set, array);
         }
-
         scanner.close();
-        return array;
+        return map;
      }
 
      }
